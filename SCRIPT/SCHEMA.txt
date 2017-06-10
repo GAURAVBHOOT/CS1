@@ -1,0 +1,47 @@
+create table customers(regid number(5) primary key, name varchar2(20),mobileNo number(10), emailId varchar2(20),password varchar2(20),balance number(10), status varchar2(10));
+
+create table transaction(transid number(5) primary key,regid number(5) references customers(regid),companyid number(5) references company(companyid), numofshares number(5),totalprice number(10),ttype varchar2(7));
+
+create table company(companyId number(5) primary key,companyName varchar2(20),numberofshares number(5),priceofshare number(5));
+
+create table login(regId number(5),password varchar2(10),role varchar2(6));
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Company table:
+
+
+insert into company values(101,'Tech Mahindra',1000,1000);
+insert into company values(102,'SBI',1000,950);
+insert into company values(103,'ITC',1000,880);
+insert into company values(104,'HDFC',1000,1437);
+insert into company values(105,'Reliance',1000,1413);
+insert into company values(106,'Volksvagen',1000,1100);
+insert into company values(107,'ICICI',1000,800);
+insert into company values(108,'TCS',1000,650);
+insert into company values(109,'Infosys',1000,1009);
+insert into company values(110,'Tata Motors',1000,918);
+insert into company values(111,'Wipro',1000,506);
+insert into company values(112,'Bosch',1000,1601);
+insert into company values(113,'HCL',1000,864);
+insert into company values(114,'Bajaj',1000,829);
+insert into company values(115,'Videocon',1000,600);
+insert into company values(116,'Siemens',1000,1290);
+insert into company values(117,'Dell',1000,850);
+insert into company values(118,'Deloitte',1000,900);
+insert into company values(119,'Kotak Mahindra',1000,877);
+insert into company values(120,'Godrej',1000,1695);
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Admin credentials need to entered in table manually as admin is assumed to be in the system by default.
+
+Admin credentials in customers table:
+
+insert into customers values(100,'Admin',9564855184,'admin@gmail.com','admin',0,'Active');
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Admin credentials in login table:
+
+insert into login values(100,'admin','admin');
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

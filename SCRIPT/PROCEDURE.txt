@@ -1,0 +1,42 @@
+create or replace procedure purchasetransaction(rid number, compid number,numofshare number)
+is
+tid number(5);
+price number(7);
+tprice number(7);
+cid number(9);
+begin
+select max(rownum) into tid from transaction;
+
+tid:=tid+1;
+select priceofshare into price from company where companyid=compid;
+select count(companyid) into cid from transaction where regid=rid and companyid=compid;
+tprice:=price*numofshare;
+if cid = 0 then
+insert into transaction values(tid,rid,compid,numofshare,tprice,'p');
+update company set numberofshares=numberofshares-numofshare where companyid=compid;
+update customers set balance=balance-tprice where regid=rid;
+else
+update transaction set numofshares=numofshares+numofshare;
+update company set numberofshares=numberofshares-numofshare where companyid=compid;
+update customers set balance=balance-tprice where regid=rid;
+end if;
+end;
+/
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+create or replace procedure selltransaction(rid number, compid number,numofshare number)
+is
+tid number(5);
+price number(7);
+tprice number(7);
+begin
+select max(rownum) into tid from transaction;
+tid:=tid+1;
+select priceofshare into price from company where companyid=compid;
+tprice:=price*numofshare;
+insert into transaction values(tid,rid,compid,numofshare,tprice,'s');
+update company set numberofshares=numberofshares+numofshare where companyid=compid;
+update customers set balance=balance+tprice where regid=rid;
+update transaction set  numofshares= numofshares-numofshare, totalprice=totalprice-tprice where regid=rid and companyid=compid;
+end;
+/

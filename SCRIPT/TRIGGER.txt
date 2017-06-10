@@ -1,0 +1,17 @@
+create or replace trigger permitChanges
+before insert or update on transaction
+declare
+nonWorkingHours Exception;
+begin
+if(to_char(Sysdate,'HH24')<9 or
+to_char(Sysdate,'HH24')>16)
+then
+raise nonWorkingHours;
+end if;
+Exception
+when nonWorkingHours
+then
+Raise_application_error(-20326,'Transaction not allowed during non working hours');
+end
+;
+/
